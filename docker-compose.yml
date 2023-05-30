@@ -1,0 +1,43 @@
+version: "3.8"
+services:
+  nginx-gateway:
+    build:
+      dockerfile: ./nginx-gateway/Dockerfile
+      context: .
+    image: nginx-gateway
+    container_name: nginx-gateway
+    ports:
+      - "8080:80"
+
+  nginx-load-balancer:
+    build:
+      dockerfile: ./nginx-load-balancer/Dockerfile
+      context: .
+    image: nginx-load-balancer
+    container_name: nginx-load-balancer
+    ports:
+      - "8084:81"
+
+  servico01:
+    image: nginx
+    container_name: servico01
+    ports:
+      - "8081:80"
+    volumes:
+      - ./servico01/html/index.html:/usr/share/nginx/html/index.html
+
+  servico02:
+    image: nginx
+    container_name: servico02
+    ports:
+      - "8082:80"
+    volumes:
+      - ./servico02/html/index.html:/usr/share/nginx/html/index.html
+
+  servico03:
+    image: nginx
+    container_name: servico03
+    ports:
+      - "8083:80"
+    volumes:
+      - ./servico03/html/index.html:/usr/share/nginx/html/index.html
